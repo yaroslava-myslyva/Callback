@@ -1,6 +1,7 @@
 package com.example.callback
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,17 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.callback.animals.Animal
 import java.lang.Exception
 
-class Adapter(val context: Context) : RecyclerView.Adapter<Adapter.ViewHolder>() {
+class Adapter() : RecyclerView.Adapter<Adapter.ViewHolder>() {
     private var animalsList: MutableList<Animal> = arrayListOf()
-    private lateinit var callback: Callback
-
+    private lateinit var soundCallback: Callback
 
     fun setData(data: MutableList<Animal>) {
         this.animalsList = data
     }
 
     fun setCallback(callback: Callback) {
-        this.callback = callback
+        soundCallback = callback
     }
 
     inner class ViewHolder(itemView: View, callback: Callback, type: Int) :
@@ -36,10 +36,8 @@ class Adapter(val context: Context) : RecyclerView.Adapter<Adapter.ViewHolder>()
             itemView.setBackgroundResource(backgroundColor)
 
             itemView.setOnClickListener {
-                callback.onItemClicked(
-                    animalsList[adapterPosition],
-                    this@Adapter.context
-                )
+                callback.onClick(animalsList[adapterPosition])
+                Log.d("ttt", "ViewHolder")
             }
 
         }
@@ -49,7 +47,7 @@ class Adapter(val context: Context) : RecyclerView.Adapter<Adapter.ViewHolder>()
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.view_holder, parent, false)
 
-        return ViewHolder(view, callback, viewType)
+        return ViewHolder(view, soundCallback, viewType)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
