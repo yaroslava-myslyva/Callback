@@ -3,5 +3,5 @@ interface Animal {
     val name : String
     val isFlying :Boolean
 
-    fun voice()
+    fun voice() :String
 }
