@@ -2,6 +2,7 @@ package com.example.callback
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.callback.animals.Animal
 import com.example.callback.animals.Dog
@@ -17,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val animalsList = mutableListOf<Animal>(
-            Dog("Mucha"),
+            Dog("Rex"),
             Goose("Stepa"),
             Dog("Bobik"),
             Goose("Snezhka")
@@ -29,8 +30,10 @@ class MainActivity : AppCompatActivity() {
         val adapter = Adapter(this)
         binding.recyclerview.adapter = adapter
         binding.recyclerview.layoutManager = LinearLayoutManager(this)
+        binding.recyclerview.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         adapter.setData(animalsList)
         adapter.setCallback(callback)
+
 
     }
 }
