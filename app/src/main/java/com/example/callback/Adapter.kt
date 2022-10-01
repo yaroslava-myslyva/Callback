@@ -1,6 +1,5 @@
 package com.example.callback
 
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +21,24 @@ class Adapter() : RecyclerView.Adapter<Adapter.ViewHolder>() {
         soundCallback = callback
     }
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.view_holder, parent, false)
+
+        return ViewHolder(view, soundCallback, viewType)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.textView?.text = animalsList[position].name
+
+    }
+
+    override fun getItemCount(): Int = animalsList.size
+
+    override fun getItemViewType(position: Int): Int {
+        return if (animalsList[position].isFlying) 1 else 0
+    }
+
     inner class ViewHolder(itemView: View, callback: Callback, type: Int) :
         RecyclerView.ViewHolder(itemView) {
         val textView: TextView? = itemView.findViewById(R.id.name)
@@ -41,23 +58,5 @@ class Adapter() : RecyclerView.Adapter<Adapter.ViewHolder>() {
             }
 
         }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.view_holder, parent, false)
-
-        return ViewHolder(view, soundCallback, viewType)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.textView?.text = animalsList[position].name
-
-    }
-
-    override fun getItemCount(): Int = animalsList.size
-
-    override fun getItemViewType(position: Int): Int {
-        return if (animalsList[position].isFlying) 1 else 0
     }
 }
